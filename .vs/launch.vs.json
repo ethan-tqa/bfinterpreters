@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "bfinterpreter.exe (bfinterpreter\\bfinterpreter.exe)",
+      "name": "bfinterpreter.exe (bfinterpreter\\bfinterpreter.exe)",
+      "args": [
+        "${projectDir}\\tests\\test.bf"
+      ]
+    }
+  ]
+}
