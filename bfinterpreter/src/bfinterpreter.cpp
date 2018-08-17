@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const int mem_size = 300;
+const int mem_size = 30000;
 
 int main(int argc, char *argv[])
 {
