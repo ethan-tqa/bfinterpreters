@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 			if (mem[ptr] == 0) {
 				int brackets = 1;
 				while (ip < code_size) {
-					ip--;
+					ip++;
 					if (code[ip] == ']') brackets--;
 					if (code[ip] == '[') brackets++;
 					if (brackets == 0)
