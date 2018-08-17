@@ -8,7 +8,7 @@
       "projectTarget": "bfinterpreter.exe (bfinterpreter\\bfinterpreter.exe)",
       "name": "bfinterpreter.exe (bfinterpreter\\bfinterpreter.exe)",
       "args": [
-        "${projectDir}\\tests\\test.bf"
+        "${projectDir}\\tests\\shorthello.bf"
       ]
     }
   ]
