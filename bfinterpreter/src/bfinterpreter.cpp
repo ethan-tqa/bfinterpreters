@@ -36,6 +36,8 @@ int main(int argc, char *argv[])
 	size_t ptr = 0; // memory pointer
 	size_t ip = 0; // instruction pointer
 
+	size_t counter = 0; // how many instructions we have gone through
+
 	for (ip = 0; ip < code_size; ip++)
 	{
 		char c = code[ip];
@@ -83,7 +85,12 @@ int main(int argc, char *argv[])
 				}
 			}
 			break;
+		default:
+			continue;
+			break;
 		}
+
+		counter++;
 	}
 
 	cout.flush();
