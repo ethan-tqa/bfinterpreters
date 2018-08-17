@@ -53,11 +53,46 @@ void run(const char * code, long code_size)
 
 	size_t counter = 0; // how many instructions we have gone through
 
-	for (ip = 0; ip < code_size; ip++)
-	{
+	size_t* jump_table = new size_t[code_size];
+	fill_n(jump_table, code_size, 0);
+
+	// scan and build jump table
+	for (ip = 0; ip < code_size; ip++) {
+		switch (code[ip]) {
+		case '[': {
+				int brackets = 1;
+				size_t tip = ip;
+				while (tip < code_size) {
+					tip++;
+					if (code[tip] == ']') brackets--;
+					if (code[tip] == '[') brackets++;
+					if (brackets == 0) {
+						jump_table[ip] = tip;
+						break; // balanced
+					}
+				}
+			}
+			break;
+		case ']': {
+				int brackets = 1;
+				size_t tip = ip;
+				while (tip > 0) {
+					tip--;
+					if (code[tip] == ']') brackets++;
+					if (code[tip] == '[') brackets--;
+					if (brackets == 0) {
+						jump_table[ip] = tip;
+						break; // balanced
+					}
+				}
+			}
+			break;
+		}
+	}
+	
+	for (ip = 0; ip < code_size; ip++) {
 		char c = code[ip];
-		switch (c)
-		{
+		switch (c) {
 		case '+':
 			mem[ptr]++;
 			break;
@@ -76,29 +111,17 @@ void run(const char * code, long code_size)
 		case ',':
 			assert(false);
 			break;
-		case '[':
+		case '[': {
 			if (mem[ptr] == 0) {
-				int brackets = 1;
-				while (ip < code_size) {
-					ip++;
-					if (code[ip] == ']') brackets--;
-					if (code[ip] == '[') brackets++;
-					if (brackets == 0)
-						break; // balanced
-				}
+				ip = jump_table[ip];
 			}
+		}
 			break;
-		case ']':
+		case ']': {
 			if (mem[ptr] != 0) {
-				int brackets = 1;
-				while (ip > 0) {
-					ip--;
-					if (code[ip] == ']') brackets++;
-					if (code[ip] == '[') brackets--;
-					if (brackets == 0) 
-						break; // balanced
-				}
+				ip = jump_table[ip];
 			}
+		}
 			break;
 		default:
 			continue;

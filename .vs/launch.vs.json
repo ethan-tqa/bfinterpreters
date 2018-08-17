@@ -8,7 +8,16 @@
       "projectTarget": "bfinterpreter.exe (bfinterpreter\\bfinterpreter.exe)",
       "name": "bfinterpreter.exe (bfinterpreter\\bfinterpreter.exe)",
       "args": [
-        "${projectDir}\\tests\\bitwidth.bf"
+        "${projectDir}\\tests\\mandel.bf"
+      ]
+    },
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "bfinteropt1.exe (bfinterpreter\\bfinteropt1.exe)",
+      "name": "bfinteropt1.exe (bfinterpreter\\bfinteropt1.exe)",
+	  "args": [
+        "${projectDir}\\tests\\mandel.bf"
       ]
     }
   ]
