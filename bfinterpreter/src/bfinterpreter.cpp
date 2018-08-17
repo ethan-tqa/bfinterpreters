@@ -4,6 +4,8 @@
 
 using namespace std;
 
+const int mem_size = 20;
+
 int main(int argc, char *argv[])
 {
 	if (argc == 1) {
@@ -22,19 +24,19 @@ int main(int argc, char *argv[])
 	}
 
 	fs.seekg(0, fs.end);
-	long size = fs.tellg();
+	long code_size = fs.tellg();
 	fs.seekg(0, fs.beg);
 
-	char * code = new char[size + 1];
-	code[size] = 0; // teminate NULL
-	fs.read(code, size);
+	char * code = new char[code_size + 1];
+	code[code_size] = 0; // teminate NULL
+	fs.read(code, code_size);
 	fs.close();
 
-	uint8_t mem[10] = { 0 }; // memory
+	int8_t mem[mem_size] = { 0 }; // memory
 	size_t ptr = 0; // memory pointer
 	size_t ip = 0; // instruction pointer
 
-	for (ip = 0; ip < size; ip++)
+	for (ip = 0; ip < code_size; ip++)
 	{
 		char c = code[ip];
 		switch (c)
@@ -59,9 +61,14 @@ int main(int argc, char *argv[])
 			break;
 		case '[':
 			if (mem[ptr] == 0) {
-				do {
-					ip++;
-				} while (code[ip] != ']');
+				int brackets = 1;
+				while (ip < code_size) {
+					ip--;
+					if (code[ip] == ']') brackets--;
+					if (code[ip] == '[') brackets++;
+					if (brackets == 0)
+						break; // balanced
+				}
 			}
 			break;
 		case ']':
