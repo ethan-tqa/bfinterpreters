@@ -16,6 +16,15 @@
       "project": "CMakeLists.txt",
       "projectTarget": "bfinteropt1.exe (bfinterpreter\\bfinteropt1.exe)",
       "name": "bfinteropt1.exe (bfinterpreter\\bfinteropt1.exe)",
+      "args": [
+        "${projectDir}\\tests\\mandel.bf"
+      ]
+    },
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "bfinteropt1_scan.exe (bfinterpreter\\bfinteropt1_scan.exe)",
+      "name": "bfinteropt1_scan.exe (bfinterpreter\\bfinteropt1_scan.exe)",
 	  "args": [
         "${projectDir}\\tests\\mandel.bf"
       ]
