@@ -37,7 +37,10 @@ int main(int argc, char *argv[])
 	fs.close();
 
 	auto t1 = high_resolution_clock::now();
-	run(code, code_size);
+	for (size_t i = 0; i < 10; i++)
+	{
+		run(code, code_size);
+	}
 	auto t2 = high_resolution_clock::now();
 
 	auto duration = duration_cast<nanoseconds>(t2 - t1).count();
@@ -106,7 +109,7 @@ void run(const char * code, long code_size)
 			ptr--;
 			break;
 		case '.':
-			cout.put((char)mem[ptr]);
+			//cout.put((char)mem[ptr]);
 			break;
 		case ',':
 			assert(false);
