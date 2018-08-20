@@ -24,3 +24,8 @@ add_executable(
     bfinteropt2_reduced
         "src/bfinteropt2_reduced.cpp"
 )
+
+add_executable(
+    bfinteropt3
+        "src/bfinteropt3.cpp"
+)
