@@ -34,3 +34,14 @@ add_executable(
     bfinteropt4
         "src/bfinteropt4.cpp"
 )
+
+add_executable(
+    bfinteropt4_fast
+        "src/bfinteropt4_fast.cpp"
+)
+
+add_executable(
+    testasm
+        "src/testasm.cpp"
+		"src/test.asm"
+)
