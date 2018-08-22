@@ -10,6 +10,7 @@ enum class eOpcode : uint16_t {
 	Read,
 	Loop,
 	Return,
+	End
 };
 
 struct instruction {

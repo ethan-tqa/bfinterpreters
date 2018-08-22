@@ -55,6 +55,15 @@
       "args": [
         "${projectDir}\\tests\\mandel.bf"
       ]
+    },
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "bfinteropt4.exe (bfinterpreter\\bfinteropt4.exe)",
+      "name": "bfinteropt4.exe (bfinterpreter\\bfinteropt4.exe)",
+      "args": [
+        "${projectDir}\\tests\\mandel.bf"
+      ]
     }
   ]
 }

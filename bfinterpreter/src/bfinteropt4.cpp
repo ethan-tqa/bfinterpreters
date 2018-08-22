@@ -59,7 +59,24 @@ int main(int argc, char *argv[])
 		cin.get();
 }
 
-void run(const char * code, long code_size, bool bench)
+// https://bullno1.com/blog/switched-goto
+#define OPCODE(X) \
+	X(Add) \
+	X(Minus) \
+	X(Right) \
+	X(Left) \
+	X(Print) \
+	X(Read) \
+	X(Loop) \
+	X(Return) \
+	X(Invalid) \
+	X(End) \
+
+#define CONCAT(X, Y) X##Y
+#define DISPATCH()  counter++; ip++; switch(instructions[ip].opcode) { OPCODE(DISPATCH_CASE) };
+#define DISPATCH_CASE(OP) case eOpcode::OP: goto CONCAT(lbl_, OP);
+
+void run(const char * code, long code_size, bool bench) 
 {
 	instruction instructions[10000];
 	size_t instructions_count = 0;
@@ -123,6 +140,8 @@ void run(const char * code, long code_size, bool bench)
 		instructions_count++;
 	}
 
+	instructions[instructions_count].opcode = eOpcode::End;
+
 	for (size_t ip = 0; ip < instructions_count; ip++)
 	{
 		int brackets = 1;
@@ -160,49 +179,40 @@ void run(const char * code, long code_size, bool bench)
 	size_t ptr = 0; // memory pointer
 
 	size_t counter = 0; // how many instructions we have gone through
-	
-	for (size_t ip = 0; ip < instructions_count; ip++) {
-		instruction inst = instructions[ip];
-		switch (inst.opcode) {
-		case eOpcode::Add:
-			mem[ptr] += inst.value;
-			break;
-		case eOpcode::Minus:
-			mem[ptr] -= inst.value;
-			break;
-		case eOpcode::Right:
-			ptr += inst.value;
-			break;
-		case eOpcode::Left:
-			ptr -= inst.value;
-			break;
-		case eOpcode::Print:
-			cout.put((char)mem[ptr]);
-			break;
-		case eOpcode::Read:
-			assert(false);
-			break;
-		case eOpcode::Loop: {
-			if (mem[ptr] == 0) {
-				ip += inst.value;
-			}
-		}
-			break;
-		case eOpcode::Return: {
-			if (mem[ptr] != 0) {
-				ip -= inst.value;
-			}
-		}
-			break;
-		case eOpcode::Invalid:
-			break;
-		default:
-			assert(false);
-			break;
-		}
+	size_t ip = -1;
 
-		counter++;
+	DISPATCH();
+lbl_Add:
+	mem[ptr] += instructions[ip].value;
+	DISPATCH();
+lbl_Minus:
+	mem[ptr] -= instructions[ip].value;
+	DISPATCH();
+lbl_Right:
+	ptr += instructions[ip].value;
+	DISPATCH();
+lbl_Left:
+	ptr -= instructions[ip].value;
+	DISPATCH();
+lbl_Print:
+	cout.put((char)mem[ptr]);
+	DISPATCH();
+lbl_Read:
+	assert(false);
+	DISPATCH();
+lbl_Loop:
+	if (mem[ptr] == 0) {
+		ip += instructions[ip].value;
 	}
-
+	DISPATCH();
+lbl_Return:
+	if (mem[ptr] != 0) {
+		ip -= instructions[ip].value;
+	}
+	DISPATCH();
+lbl_Invalid:
+	DISPATCH();
+lbl_End:
+	
 	cout.flush();
  }
